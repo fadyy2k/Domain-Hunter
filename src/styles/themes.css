@@ -1,0 +1,195 @@
+/* ============================================
+   DomainHunter Premium Theme System
+   3 Theme Presets: Linear, Stripe, Notion
+   ============================================ */
+
+:root {
+    --radius: 0.75rem;
+}
+
+/* ============================================
+   LINEAR THEME (Default)
+   Deep charcoal base + subtle neon edge glow
+   ============================================ */
+[data-theme="linear"],
+:root {
+    /* Base colors */
+    --background: 220 16% 6%;
+    --foreground: 210 40% 98%;
+
+    /* Surface layers */
+    --surface: 220 15% 10%;
+    --card: 220 15% 12%;
+    --card-foreground: 210 40% 98%;
+    --popover: 220 15% 10%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Interactive */
+    --primary: 250 100% 68%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 210 40% 98%;
+
+    /* Muted */
+    --muted: 220 15% 16%;
+    --muted-foreground: 215 20% 55%;
+
+    /* Accent - neon purple/blue */
+    --accent: 260 100% 65%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Semantic */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 76% 46%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 0%;
+
+    /* Borders & Focus */
+    --border: 220 15% 20%;
+    --input: 220 15% 18%;
+    --ring: 250 100% 68%;
+
+    /* Gradient accents */
+    --gradient-start: 250 100% 68%;
+    --gradient-end: 280 100% 60%;
+}
+
+/* ============================================
+   STRIPE THEME
+   Restrained aurora gradient wash
+   ============================================ */
+[data-theme="stripe"] {
+    /* Base colors - slightly warmer */
+    --background: 230 25% 7%;
+    --foreground: 0 0% 100%;
+
+    /* Surface layers */
+    --surface: 230 25% 11%;
+    --card: 230 25% 13%;
+    --card-foreground: 0 0% 100%;
+    --popover: 230 25% 11%;
+    --popover-foreground: 0 0% 100%;
+
+    /* Interactive - Stripe's signature blue-purple */
+    --primary: 252 94% 67%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 230 25% 20%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Muted */
+    --muted: 230 25% 18%;
+    --muted-foreground: 230 20% 50%;
+
+    /* Accent - aurora gradient feel */
+    --accent: 280 100% 70%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Semantic */
+    --destructive: 4 90% 58%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 160 84% 39%;
+    --success-foreground: 0 0% 100%;
+    --warning: 37 91% 55%;
+    --warning-foreground: 0 0% 0%;
+
+    /* Borders & Focus */
+    --border: 230 25% 22%;
+    --input: 230 25% 18%;
+    --ring: 252 94% 67%;
+
+    /* Gradient accents */
+    --gradient-start: 252 94% 67%;
+    --gradient-end: 320 90% 65%;
+}
+
+/* ============================================
+   NOTION THEME
+   Neutral surfaces + soft accent wash
+   ============================================ */
+[data-theme="notion"] {
+    /* Base colors - warmer, less saturated */
+    --background: 220 10% 8%;
+    --foreground: 60 9% 90%;
+
+    /* Surface layers */
+    --surface: 220 10% 12%;
+    --card: 220 10% 14%;
+    --card-foreground: 60 9% 90%;
+    --popover: 220 10% 12%;
+    --popover-foreground: 60 9% 90%;
+
+    /* Interactive - warm beige/tan accent */
+    --primary: 30 60% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 10% 20%;
+    --secondary-foreground: 60 9% 90%;
+
+    /* Muted */
+    --muted: 220 10% 18%;
+    --muted-foreground: 220 10% 50%;
+
+    /* Accent - soft amber/orange */
+    --accent: 25 90% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Semantic */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 143 64% 40%;
+    --success-foreground: 0 0% 100%;
+    --warning: 43 96% 56%;
+    --warning-foreground: 0 0% 0%;
+
+    /* Borders & Focus */
+    --border: 220 10% 22%;
+    --input: 220 10% 18%;
+    --ring: 30 60% 55%;
+
+    /* Gradient accents */
+    --gradient-start: 30 60% 55%;
+    --gradient-end: 15 80% 50%;
+}
+
+/* ============================================
+   Theme-Specific Background Gradients
+   ============================================ */
+
+/* Linear theme background */
+[data-theme="linear"] body::before,
+:root body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, hsl(260 100% 30% / 0.15), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 0%, hsl(250 100% 40% / 0.1), transparent),
+        hsl(var(--background));
+}
+
+/* Stripe theme background */
+[data-theme="stripe"] body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(ellipse 100% 50% at 50% -30%, hsl(280 100% 50% / 0.12), transparent),
+        radial-gradient(ellipse 80% 40% at 0% 50%, hsl(252 100% 50% / 0.08), transparent),
+        radial-gradient(ellipse 60% 50% at 100% 80%, hsl(320 100% 50% / 0.06), transparent),
+        hsl(var(--background));
+}
+
+/* Notion theme background */
+[data-theme="notion"] body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(ellipse 100% 60% at 50% -20%, hsl(30 60% 30% / 0.08), transparent),
+        radial-gradient(ellipse 50% 40% at 100% 100%, hsl(25 80% 40% / 0.05), transparent),
+        hsl(var(--background));
+}

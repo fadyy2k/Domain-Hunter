@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    env:
+      DATABASE_URL: "file:./ci.db"
+      ENCRYPTION_KEY: "0123456789abcdef0123456789abcdef"
+      NODE_ENV: "production"
+      NEXT_TELEMETRY_DISABLED: 1
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: |
+        if [ -f package-lock.json ]; then
+          npm ci
+        else
+          npm install
+        fi
+
+    - name: Generate Prisma Client
+      run: npx prisma generate
+
+    - name: Initialize Database (SQLite for CI)
+      run: npx prisma db push
+
+    - name: Lint
+      run: npm run lint
+
+    - name: Type Check
+      run: npx tsc -p tsconfig.json --noEmit
+
+    - name: Build
+      run: npm run build
+
