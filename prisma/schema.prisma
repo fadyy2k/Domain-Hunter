@@ -1,0 +1,116 @@
+// Prisma Schema for DomainHunter
+// Database: SQLite (default) / PostgreSQL (production)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// Project: Groups multiple runs with settings
+// ============================================
+model Project {
+  id        String   @id @default(cuid())
+  name      String
+  settings  String   // JSON: generation config
+  phrases   String   // JSON array: input phrases
+  tlds      String   // JSON array: selected TLDs
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  runs      Run[]
+
+  @@index([createdAt])
+}
+
+// ============================================
+// Run: A single execution of domain checking
+// ============================================
+model Run {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  startedAt DateTime @default(now())
+  endedAt   DateTime?
+  status    String   @default("running") // running, completed, stopped
+  total     Int      @default(0)
+  checked   Int      @default(0)
+  available Int      @default(0)
+  results   Result[]
+
+  @@index([projectId])
+  @@index([startedAt])
+}
+
+// ============================================
+// Result: Individual domain check result
+// ============================================
+model Result {
+  id         String   @id @default(cuid())
+  runId      String
+  run        Run      @relation(fields: [runId], references: [id], onDelete: Cascade)
+  domain     String
+  tld        String
+  status     String   // available, taken, unknown
+  confidence Float?   // 0-1 confidence score
+  source     String   // rdap, namecheap, godaddy
+  premium    Boolean  @default(false)
+  price      Float?
+  currency   String?
+  responseMs Int?     // response time in milliseconds
+  checkedAt  DateTime @default(now())
+  favorite   Boolean  @default(false)
+  score      Int?     // quality score 0-100
+  raw        String?  // JSON: raw response data
+
+  @@unique([runId, domain])
+  @@index([runId])
+  @@index([domain])
+  @@index([favorite])
+  @@index([status])
+}
+
+// ============================================
+// ApiKey: Encrypted registrar API credentials
+// ============================================
+model ApiKey {
+  id        String   @id @default(cuid())
+  provider  String   @unique // namecheap, godaddy, cloudflare
+  keyEnc    String   // AES-GCM encrypted API key
+  secretEnc String?  // AES-GCM encrypted secret (if applicable)
+  username  String?  // Some APIs need username
+  sandbox   Boolean  @default(false) // Use sandbox/test mode
+  enabled   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ============================================
+// Cache: Short-term RDAP result cache
+// ============================================
+model Cache {
+  domain    String   @id
+  status    String   // available, taken, unknown
+  source    String   // rdap, registrar name
+  data      String?  // JSON: cached response data
+  checkedAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}
+
+// ============================================
+// Settings: Global app settings
+// ============================================
+model Settings {
+  id              String   @id @default("default")
+  theme           String   @default("linear") // linear, stripe, notion
+  concurrency     Int      @default(10)
+  cacheAvailTTL   Int      @default(3600)    // seconds (1 hour)
+  cacheTakenTTL   Int      @default(86400)   // seconds (24 hours)
+  defaultTlds     String   @default("[\"com\",\"io\",\"co\",\"ai\",\"app\",\"dev\"]")
+  updatedAt       DateTime @updatedAt
+}
