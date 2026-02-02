@@ -43,16 +43,6 @@ Finding the perfect domain name is hard. Most generators are slow, cluttered, or
 -   🎨 **Premium UI**: Beautiful dark mode interface with glassmorphism and smooth animations.
 -   🐳 **Self-Hostable**: Deployment ready with Docker, PM2, and Nginx.
 
-## 📸 Screenshots
-
-### Dashboard
-![Dashboard](docs/images/dashboard.png)
-
-### Real-time Results
-![Results](docs/images/results.png)
-
-### Settings & Vault
-![Settings](docs/images/settings.png)
 
 ## 🏗 Architecture
 
