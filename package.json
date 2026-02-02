@@ -1,5 +1,6 @@
 {
   "name": "domainhunter",
+  "description": "Open-source smart domain name generator & availability checker.",
   "version": "1.0.0",
   "private": true,
   "scripts": {

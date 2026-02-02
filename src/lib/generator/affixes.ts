@@ -17,7 +17,7 @@ export const PREFIXES = [
 
 // Powerful, brandable suffixes
 export const SUFFIXES = [
-    // Tech/SaaS
+    // Tech
     "app", "hq", "pro", "hub", "io", "ai",
     // Action suffixes  
     "now", "go", "up", "fy", "ify",

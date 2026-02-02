@@ -1,118 +1,150 @@
 # DomainHunter
 
-![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue?style=flat-square&logo=typescript)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+<div align="center">
+  <img src="docs/images/og.png" alt="DomainHunter Banner" width="100%" />
 
-**Smart Domain Name Generator & Bulk Availability Checker SaaS.**
+  <br />
+  <br />
 
-DomainHunter is a production-ready SaaS application designed to help users discover available domain names through advanced algorithmic generation and high-speed bulk availability checking.
+  [![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+  [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+  [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-purple?style=for-the-badge)](https://github.com/fadyy2k/Domain-Hunter)
+  [![CI Status](https://github.com/fadyy2k/Domain-Hunter/actions/workflows/ci.yml/badge.svg)](https://github.com/fadyy2k/Domain-Hunter/actions)
 
-![DomainHunter Preview](./docs/screenshot.png)
+  <h3 align="center">Smart Domain Name Generator & Availability Checker</h3>
 
-## Features
+  <p align="center">
+    Open-source tool with advanced phonetic generation, high-performance SSE availability streaming, and secure local vault.
+    <br />
+    <a href="https://github.com/fadyy2k/Domain-Hunter/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/fadyy2k/Domain-Hunter/issues">Request Feature</a>
+  </p>
+</div>
 
-- 🧠 **Smart Generation** - Uses advanced phonetic, syllable, and compound strategies to create brandable names.
-- ⚡ **Bulk Availability** - High-concurrency checking with Real-time SSE streaming updates.
-- 🔒 **Secure Vault** - Client-side encryption for safe storage of Namecheap/GoDaddy API keys.
-- 📊 **Virtualized Results** - Efficiently handles lists of 5,000+ domains with smooth scrolling.
-- 💾 **Local Persistence** - Auto-saves projects and configurations to local storage.
-- 🎨 **Premium UI** - Modern interface with multiple themes (Linear, Stripe, Notion).
-- 📱 **Fully Responsive** - Optimized for all devices.
+---
 
-## Tech Stack
+## 🚀 Why DomainHunter?
 
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript (Strict)
-- **Styling**: Tailwind CSS + shadcn/ui
-- **Database**: SQLite (Dev) / PostgreSQL (Prod)
-- **State**: Server Actions + React Hooks
-- **Real-time**: Server-Sent Events (SSE)
-- **Deployment**: PM2 + Nginx + Docker
+Finding the perfect domain name is hard. Most generators are slow, cluttered, or hide the best results behind paywalls.
 
-## Quick Start
+**DomainHunter** is different. It's a professional **open-source application** designed for speed and privacy.
+-   **Zero tracking**: Your ideas stay on your machine.
+-   **Real-time**: Checks availability instantly via Server-Sent Events (SSE).
+-   **Smart**: Uses linguistic algorithms (syllable mixing, phonetic matching) to invent brandable names.
+
+## ✨ Features
+
+-   🧠 **Smart Generation Engine**: phonetic patterns, compound words, and startup-style naming.
+-   ⚡ **Bulk Availability Checking**: High-concurrency RDAP checking with real-time SSE streaming.
+-   📊 **Virtualized Results**: Smoothly handle lists of 5,000+ domains without lag.
+-   🔐 **Secure Vault**: Client-side AES-256 encryption for your registrar API keys (Namecheap/GoDaddy).
+-   🎨 **Premium UI**: Beautiful dark mode interface with glassmorphism and smooth animations.
+-   🐳 **Self-Hostable**: Deployment ready with Docker, PM2, and Nginx.
+
+## 📸 Screenshots
+
+### Dashboard
+![Dashboard](docs/images/dashboard.png)
+
+### Real-time Results
+![Results](docs/images/results.png)
+
+### Settings & Vault
+![Settings](docs/images/settings.png)
+
+## 🏗 Architecture
+
+```mermaid
+flowchart TD
+    User[User Interface] -->|Next.js Server Actions| API[API Routes]
+    API -->|Validation & Queue| Queue[Job Queue]
+    Queue -->|Check Availability| RDAP[RDAP Protocol]
+    RDAP -->|Live Status| Cache[Redis/In-Memory Cache]
+    Queue -->|SSE Stream| User
+    API -->|Encrypted Storage| DB[(Database)]
+```
+
+## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+
-- npm 9+
+-   Node.js 18+
+-   npm 9+
 
 ### Installation
 
 ```bash
-# Clone repository
+# Clone the repository
 git clone https://github.com/fadyy2k/Domain-Hunter.git
 cd Domain-Hunter
 
 # Install dependencies
 npm ci
 
-# Setup database
+# Initialize database
 npx prisma generate
 npx prisma db push
 
-# Start development
+# Start development server
 npm run dev
 ```
 
-## Environment Variables
+Visit `http://localhost:3000` to start hunting!
 
-Create a `.env` file in the root:
+## 🔌 API Reference
 
-```env
-# Database
-DATABASE_URL="file:./dev.db"
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/api/generate` | `POST` | Generate domain suggestions based on keywords and strategy. |
+| `/api/check` | `POST` | Check availability for a list of domains (Streaming SSE). |
+| `/api/projects` | `GET` | Retrieve saved projects and history. |
+| `/api/keys` | `POST` | Securely store encrypted registrar API keys. |
+| `/api/health` | `GET` | System health and status check. |
 
-# Security (32-char random string)
-ENCRYPTION_KEY="your-32-character-secret-key-here"
+## 🐳 Deployment
 
-# Application Config
-RDAP_TIMEOUT=5000
-CHECK_CONCURRENCY=10
-```
+DomainHunter is production-ready.
 
-## Deployment
-
-The application is optimized for deployment on VPS (Ubuntu/Debian) using PM2 and Nginx.
-
-### PM2 Setup
+### Docker
 ```bash
-# Production build
-npm run build
-
-# Start with PM2
-pm2 start ecosystem.config.js
-pm2 save
+docker-compose up -d --build
 ```
 
-### Nginx Configuration (SSE Optimized)
-Ensure your Nginx config handles Server-Sent Events correctly:
+### PM2 (VPS)
+```bash
+npm run build
+pm2 start ecosystem.config.js
+```
+
+### Nginx Configuration
+Ensure SSE streaming is supported by disabling buffering:
 ```nginx
 location /api/check {
     proxy_buffering off;
     proxy_cache off;
-    proxy_read_timeout 86400s;
-    proxy_set_header X-Accel-Buffering no;
+    proxy_set_header Connection '';
+    proxy_http_version 1.1;
+    chunked_transfer_encoding off;
 }
 ```
 
-## API Reference
+## 🔐 Security
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/generate` | POST | Generate domain suggestions based on keywords |
-| `/api/check` | POST | Stream availability results (SSE) |
-| `/api/keys` | POST | Securely store registrar API keys |
-| `/api/health` | GET | System health check |
+-   **Encryption**: API keys are encrypted with `AES-256-GCM`.
+-   **Environment**: No secrets are hardcoded. Use `.env` for configuration.
+-   **Privacy**: This is an open-source tool. You own your data.
 
-## Scripts
+## 🤝 Contributing
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm start` | Start production server (Port 4003) |
-| `npm run lint` | Run ESLint |
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+
+## ⭐ Open Source
+
+This project is open-source and free to use.
+If you find it useful, please consider giving it a star on GitHub! ⭐️
 
 ## License
-
-MIT © [Fady](https://github.com/fadyy2k)
+Distributed under the MIT License. See `LICENSE` for more information.

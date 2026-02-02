@@ -133,21 +133,23 @@ export default function AboutPage() {
                     transition={{ duration: 0.5, delay: 0.6 }}
                     className="text-center text-sm text-muted-foreground"
                 >
-                    <p className="flex items-center justify-center gap-2">
+                    <p className="flex items-center justify-center gap-2 mb-4">
                         Built with <Heart className="h-4 w-4 text-red-500" /> using Next.js and
                         TypeScript
                     </p>
-                    <div className="mt-4 flex justify-center gap-4">
-                        <Button variant="outline" size="sm" asChild>
+                    <div className="flex flex-col items-center gap-4">
+                        <p className="text-base font-medium text-foreground">
+                            DomainHunter is a 100% free and open-source project.
+                        </p>
+                        <Button variant="outline" size="lg" asChild className="gap-2">
                             <a
-                                href="https://github.com/yourusername/domainhunter"
+                                href="https://github.com/fadyy2k/Domain-Hunter"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2"
                             >
                                 <Code className="h-4 w-4" />
-                                View Source
-                                <ExternalLink className="h-3 w-3" />
+                                Star on GitHub
+                                <ExternalLink className="h-4 w-4" />
                             </a>
                         </Button>
                     </div>
