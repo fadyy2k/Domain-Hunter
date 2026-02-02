@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
+// DomainHunter Open Source Release
 import { ClientLayout } from "@/components/layout/client-layout";
 
 const inter = Inter({

@@ -13,6 +13,7 @@ datasource db {
 // ============================================
 // Project: Groups multiple runs with settings
 // ============================================
+// DomainHunter Open Source
 model Project {
   id        String   @id @default(cuid())
   name      String

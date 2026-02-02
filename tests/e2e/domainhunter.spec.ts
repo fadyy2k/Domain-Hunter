@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+// DomainHunter Open Source Release
 
 /**
  * DomainHunter E2E Smoke Tests

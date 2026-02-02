@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+// DomainHunter Open Source Release
 const nextConfig = {
     reactStrictMode: true,
     experimental: {

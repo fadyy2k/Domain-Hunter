@@ -1,3 +1,4 @@
+// DomainHunter Open Source Release
 module.exports = {
     apps: [
         {

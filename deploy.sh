@@ -1,4 +1,5 @@
 #!/bin/bash
+# DomainHunter Open Source Release
 #
 # DomainHunter Production Deployment Script
 # Usage: ./deploy.sh

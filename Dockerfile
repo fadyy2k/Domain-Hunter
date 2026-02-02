@@ -1,4 +1,5 @@
 # syntax=docker/dockerfile:1
+# DomainHunter Open Source Release
 
 FROM node:20-alpine AS base
 

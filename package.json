@@ -2,7 +2,11 @@
   "name": "domainhunter",
   "description": "Open-source smart domain name generator & availability checker.",
   "version": "1.0.0",
-  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fadyy2k/Domain-Hunter.git"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
